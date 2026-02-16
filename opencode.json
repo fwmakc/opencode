@@ -1,0 +1,121 @@
+{
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "model": "qwen3-coder-next",
+      "temperature": 0.3,
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true
+      },
+      "permission": {
+        "edit": "ask",
+        "bash": "ask"
+      }
+    },
+    "plan": {
+      "mode": "primary",
+      "model": "qwen3-coder-next",
+      "temperature": 0.1,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false
+      },
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "webfetch": "deny"
+      }
+    },
+    "analyst": {
+      "description": "Аналитик задач и планировщик решений",
+      "mode": "subagent",
+      "model": "qwen3-coder-next",
+      "temperature": 0.1,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false
+      },
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "webfetch": "deny",
+        "skill": {
+          "*": "allow"
+        }
+      }
+    },
+    "coder": {
+      "description": "Fullstack-разработчик TypeScript",
+      "mode": "subagent",
+      "model": "qwen3-coder-next",
+      "temperature": 0.3,
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true
+      },
+      "permission": {
+        "edit": "ask",
+        "bash": "ask",
+        "webfetch": "deny",
+        "skill": {
+          "*": "allow"
+        }
+      }
+    },
+    "reviewer": {
+      "description": "Ревьюер кода - безопасность и производительность",
+      "mode": "subagent",
+      "model": "qwen3-coder-next",
+      "temperature": 0.1,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": true
+      },
+      "permission": {
+        "edit": "deny",
+        "bash": "ask",
+        "webfetch": "deny",
+        "skill": {
+          "*": "allow"
+        }
+      }
+    },
+    "deployer": {
+      "description": "DevOps-инженер - деплой и проверка",
+      "mode": "subagent",
+      "model": "qwen3-coder-next",
+      "temperature": 0.1,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": true
+      },
+      "permission": {
+        "edit": "deny",
+        "bash": "ask",
+        "webfetch": "deny",
+        "skill": {
+          "*": "allow"
+        }
+      }
+    }
+  },
+  "mcp": {
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-playwright"],
+      "enabled": true
+    },
+    "google-search": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-google-search"],
+      "enabled": true
+    }
+  }
+}
