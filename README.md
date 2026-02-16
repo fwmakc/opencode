@@ -40,12 +40,32 @@ opencode
 /connect
 ```
 
-3. Инициализируй проект:
+3. Установи настройки:
+
+```bash
+git clone https://github.com/fwmakc/opencode.git .opencode
+```
+
+4. Инициализируй проект:
 
 ```bash
 opencode
 /init
 ```
+
+## Конфигурация
+
+Задай правильные модели в файле `opencode.json` и файлах агентов `agents`.
+
+Например:
+
+```
+model: litellm/qwen3-coder-next
+```
+
+> Без этого агент не запустится!
+
+Можно более детально сконфигурировать промты и скилы агентов под свои задачи.
 
 ## Использование
 
@@ -54,7 +74,7 @@ opencode
 Введи в TUI opencode:
 
 ```
-/pipeline
+/pipeline text of your promt
 ```
 
 Команда автоматически запустит:
