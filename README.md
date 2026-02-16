@@ -1,0 +1,2 @@
+# opencode
+Settings for opencode
