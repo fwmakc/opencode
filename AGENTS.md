@@ -14,7 +14,8 @@
 | Агент      | Описание                                  | Инструменты       |
 | ---------- | ----------------------------------------- | ----------------- |
 | `analyst`  | Аналитик задач и планировщик              | none              |
-| `coder`    | Fullstack TypeScript разработчик          | write, edit, bash |
+| `coder`    | Fullstack разработчик                     | write, edit, bash |
+| `tester`   | Тестировщик                               | write, edit, bash |
 | `reviewer` | Ревьюер безопасности и производительности | bash (read-only)  |
 | `deployer` | DevOps - деплой и проверка                | bash (read-only)  |
 
@@ -29,13 +30,14 @@
 ```
 @analyst проанализируй задачу
 @coder реализуй функционал
+@tester напиши тесты
 @reviewer проверь код
 @deployer разверни проект
 ```
 
 ## Конфигурация
 
-Файл: `.opencode/opencode.json`
+Файл: `opencode.json`
 
 ### Параметры агента:
 
@@ -50,6 +52,7 @@
 
 1. **Аналитик** → анализ задачи → PLAN.md
 2. **Кодер** → реализация по плану → CODER_REPORT.md
+2. **Тестировщик** → покрытие тестами → TEST_REPORT.md
 3. **Ревьюер** → проверка кода → REVIEW_REPORT.md
 4. **Деплойер** → развертывание → DEPLOY_STATUS.md
 

@@ -7,11 +7,10 @@
 Система состоит из 4 агентов, работающих в конвейере:
 
 ```
-┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│  Аналитик   │ →  │   Кодер     │ →  │  Ревьюер    │ →  │  Деплойер   │
-│ (PLAN.md)   │    │(CODER_REPORT│    │(REVIEW_REPORT│    │(DEPLOY_STATUS│
-└─────────────┘    │  .md)       │    │  .md)       │    │  .md)       │
-                   └─────────────┘    └─────────────┘    └─────────────┘
+┌──────────┐   ┌─────────────────┐   ┌────────────────┐   ┌──────────────────┐   ┌──────────────────┐
+│ Аналитик │ → │ Кодер           │ → │ Тестировщик    │ → │ Ревьюер          │ → │ Деплойер         │
+│ PLAN.md  │   │ CODER_REPORT.md │   │ TEST_REPORT.md │   │ REVIEW_REPORT.md │   │ DEPLOY_STATUS.md │
+└──────────┘   └─────────────────┘   └────────────────┘   └──────────────────┘   └──────────────────┘
 ```
 
 ## Агенты
@@ -21,7 +20,8 @@
 | `build`    | primary  | Основной режим разработки          | write, edit, bash |
 | `plan`     | primary  | Режим планирования (только чтение) | none              |
 | `analyst`  | subagent | Аналитик задач                     | none              |
-| `coder`    | subagent | TypeScript разработчик             | write, edit, bash |
+| `coder`    | subagent | Разработчик                        | write, edit, bash |
+| `tester`   | subagent | Тестировщик                        | write, edit, bash |
 | `reviewer` | subagent | Ревьюер безопасности               | bash (read-only)  |
 | `deployer` | subagent | DevOps деплой                      | bash (read-only)  |
 
@@ -43,7 +43,7 @@ opencode
 3. Установи настройки:
 
 ```bash
-git clone https://github.com/fwmakc/opencode.git .opencode
+git clone https://github.com/fwmakc/opencode.git
 ```
 
 4. Инициализируй проект:
@@ -55,7 +55,7 @@ opencode
 
 ## Конфигурация
 
-Задай правильные модели в файле `opencode.json` и файлах агентов `agents`.
+Задай правильные модели в файлах агентов `agents`.
 
 Например:
 
@@ -81,6 +81,7 @@ model: litellm/qwen3-coder-next
 
 1. **Аналитик** → PLAN.md
 2. **Кодер** → CODER_REPORT.md
+2. **Тестировщик** → TEST_REPORT.md
 3. **Ревьюер** → REVIEW_REPORT.md (APPROVED/REJECTED)
 4. **Деплойер** → DEPLOY_STATUS.md
 
@@ -92,6 +93,7 @@ model: litellm/qwen3-coder-next
 | --------- | ------------------------------- |
 | `/plan`   | Создать план разработки         |
 | `/coder`  | Реализовать функционал по плану |
+| `/tester` | Покрыть код тестами             |
 | `/review` | Проверить код на качество       |
 | `/deploy` | Развернуть и проверить          |
 
@@ -102,6 +104,7 @@ model: litellm/qwen3-coder-next
 ```
 @analyst проанализируй задачу: ...
 @coder реализуй функционал: ...
+@tester напиши тесты: ...
 @reviewer проверь код: ...
 @deployer разверни проект: ...
 ```
@@ -113,12 +116,14 @@ model: litellm/qwen3-coder-next
 ├── agents/               # Агенты (субагенты)
 │   ├── analyst.md
 │   ├── coder.md
+│   ├── tester.md
 │   ├── reviewer.md
 │   └── deployer.md
 ├── commands/             # Пользовательские команды
 │   ├── pipeline.md
 │   ├── plan.md
 │   ├── coder.md
+│   ├── tester.md
 │   ├── review.md
 │   └── deploy.md
 ├── opencode.json         # Конфигурация агентов
@@ -174,17 +179,6 @@ model: litellm/qwen3-coder-next
 ```bash
 npm install -D @modelcontextprotocol/server-playwright @modelcontextprotocol/server-google-search
 ```
-
-## LSP-серверы
-
-Проект настроен на использование LSP-серверов для TypeScript и JavaScript.
-
-### Встроенные серверы:
-
-| Сервер       | Расширения                                                           | Требования                    |
-| ------------ | -------------------------------------------------------------------- | ----------------------------- |
-| `typescript` | `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs`, `.cjs`, `.mts`, `.cts`         | `typescript` в `package.json` |
-| `eslint`     | `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs`, `.cjs`, `.mts`, `.cts`, `.vue` | `eslint` в `package.json`     |
 
 ### Настройка:
 

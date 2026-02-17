@@ -9,7 +9,7 @@ tools:
   bash: true
 permission:
   edit: deny
-  bash: ask
+  bash: allow
   webfetch: deny
   skill: { "*": "allow" }
 ---
